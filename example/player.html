@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="fr" ng-app="app">
+<head>
+    <meta charset="utf-8">
+    <title>AngularJS MusicPlayer demo</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="../node_modules/angular/angular.min.js"></script>
+    <script src="../angular-music-player.js"></script>
+    <script src="app.js"></script>
+</head>
+<body ng-controller="AppCtrl as ctrl">
+    <div class="container">
+
+        <div class="jumbotron">
+            <h1>AngularJS MusicPlayer demo</h1>
+            <p class="lead">Simple AngularJS service that provide controls for your HTML5 Audio player</p>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <h3>Controls</h3>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="row">
+                    <div class="col-lg-9">
+                        <div class="btn-group btn-group-lg" role="group">
+                            <button type="button" class="btn"
+                                    ng-disabled="!ctrl.MusicPlayer.currentTrack"
+                                    ng-click="ctrl.MusicPlayer.fastBackward()">
+                                <i class="glyphicon glyphicon-step-backward"></i>
+                            </button>
+                            <button type="button" class="btn"
+                                    ng-disabled="!ctrl.MusicPlayer.hasPreviousTrack()"
+                                    ng-click="ctrl.MusicPlayer.playPreviousTrack()">
+                                <i class="glyphicon glyphicon-backward"></i>
+                            </button>
+                            <button type="button" class="btn"
+                                    ng-if="!ctrl.MusicPlayer.currentTrack || ctrl.MusicPlayer.pause"
+                                    ng-click="ctrl.MusicPlayer.playTrack()">
+                                <i class="glyphicon glyphicon-play"></i>
+                            </button>
+                            <button type="button" class="btn"
+                                    ng-if="ctrl.MusicPlayer.currentTrack && !ctrl.MusicPlayer.pause"
+                                    ng-click="ctrl.MusicPlayer.pauseStopTrack()">
+                                <i class="glyphicon glyphicon-pause"></i>
+                            </button>
+                            <button type="button" class="btn"
+                                    ng-disabled="!ctrl.MusicPlayer.hasNextTrack()"
+                                    ng-click="ctrl.MusicPlayer.playNextTrack()">
+                                <i class="glyphicon glyphicon-forward"></i>
+                            </button>
+                            <button type="button" class="btn"
+                                    ng-disabled="!ctrl.MusicPlayer.currentTrack"
+                                    ng-click="ctrl.MusicPlayer.fastForward()">
+                                <i class="glyphicon glyphicon-step-forward"></i>
+                            </button>
+                            <button type="button" class="btn"
+                                    ng-disabled="!ctrl.MusicPlayer.currentTrack"
+                                    ng-click="ctrl.MusicPlayer.replayTrack()">
+                                <i class="glyphicon glyphicon-repeat"></i>
+                            </button>
+                            <button type="button" class="btn"
+                                    ng-class="{'btn-primary': ctrl.MusicPlayer.showPlaylist}"
+                                    ng-click="ctrl.MusicPlayer.toggleShowPlaylist()">
+                                <sup class="badge">
+                                    <span class="text-default-bright" ng-bind="ctrl.MusicPlayer.playlist.length"></span>
+                                </sup>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <label>Volume</label>
+                        <input type="range" min="0" max="1" step="0.01" ng-model="ctrl.MusicPlayer.player.volume">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <span ng-bind="ctrl.MusicPlayer.currentTrack.artist"></span> -
+                <span ng-bind="ctrl.MusicPlayer.currentTrack.title"></span>
+
+                <div class="progress">
+                    <div class="progress-bar" style="width:{{ ctrl.MusicPlayer.progress }}%"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" ng-show="ctrl.MusicPlayer.showPlaylist">
+            <div class="col-lg-12">
+                <div id="playlist">
+                    <h3>
+                        Playlist <br>
+                        <small>{{ ctrl.MusicPlayer.playlist.length }} titres</small>
+                    </h3>
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Artist</th>
+                            <th>Title</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="track in ctrl.MusicPlayer.playlist">
+                            <th scope="row">{{ $index + 1 }}</th>
+                            <td>{{ ::track.artist }}</td>
+                            <td>{{ ::track.title }}</td>
+                            <td>
+                                <button type="button" class="btn btn-default"
+                                        ng-click="ctrl.MusicPlayer.playTrack(track)"
+                                        ng-if="ctrl.MusicPlayer.pause || track != ctrl.MusicPlayer.currentTrack">
+                                    <span class="glyphicon glyphicon-play"></span>
+                                </button>
+                                <button class="btn btn-default"
+                                        ng-click="ctrl.MusicPlayer.pauseStopTrack(track)"
+                                        ng-if="!ctrl.MusicPlayer.pause && track === ctrl.MusicPlayer.currentTrack">
+                                    <i class="glyphicon glyphicon-pause"></i>
+                                </button>
+                                <button class="btn btn-default" ng-click="ctrl.MusicPlayer.removeTrack(track)">
+                                    <i class="glyphicon glyphicon-remove"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

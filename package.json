@@ -1,0 +1,30 @@
+{
+  "name": "angular-music-player",
+  "version": "0.0.1",
+  "description": "Simple AngularJS service that provide controls for your HTML5 Audio player",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alexandregodet/angular-music-player.git"
+  },
+  "main": "dist/angular-music-player.js",
+  "keywords": [
+    "angular",
+    "music",
+    "player",
+    "html5",
+    "audio"
+  ],
+  "author": "Alexandre GODET",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alexandregodet/angular-music-player/issues"
+  },
+  "homepage": "https://github.com/alexandregodet/angular-music-player",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "angular": "^1.5.5"
+  },
+  "scripts": {
+  }
+}
